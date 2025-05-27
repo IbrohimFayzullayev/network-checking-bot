@@ -1,6 +1,6 @@
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
-const ping = require("ping");
+// const ping = require("ping");
 const { getFakeSpeedtest } = require("./utils/func");
 
 const token = process.env.TELEGRAM_TOKEN;
@@ -13,14 +13,33 @@ bot.onText(/\/start/, (msg) => {
   );
 });
 
+// bot.onText(/\/ping/, async (msg) => {
+//   const chatId = msg.chat.id;
+
+//   const res = await ping.promise.probe("google.com");
+//   if (res.alive) {
+//     bot.sendMessage(
+//       chatId,
+//       `✅ Internet ishlayapti. Ping vaqti: ${res.time} ms`
+//     );
+//   } else {
+//     bot.sendMessage(chatId, `❌ Internet ulanmagan yoki ping javob bermadi.`);
+//   }
+// });
+
 bot.onText(/\/ping/, async (msg) => {
   const chatId = msg.chat.id;
 
-  const res = await ping.promise.probe("google.com");
-  if (res.alive) {
+  // 30ms dan 150ms gacha random ping vaqti
+  const fakePing = Math.floor(Math.random() * (150 - 30 + 1)) + 30;
+
+  // 80% holatda "ping bor", 20% holatda ulanmagan deb chiqarish
+  const isAlive = Math.random() < 0.8;
+
+  if (isAlive) {
     bot.sendMessage(
       chatId,
-      `✅ Internet ishlayapti. Ping vaqti: ${res.time} ms`
+      `✅ Internet ishlayapti. Ping vaqti: ${fakePing} ms`
     );
   } else {
     bot.sendMessage(chatId, `❌ Internet ulanmagan yoki ping javob bermadi.`);
