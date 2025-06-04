@@ -15,10 +15,8 @@ bot.onText(/\/start/, (msg) => {
 bot.onText(/\/ping/, async (msg) => {
   const chatId = msg.chat.id;
 
-  // 30ms dan 150ms gacha random ping vaqti
   const fakePing = Math.floor(Math.random() * (150 - 30 + 1)) + 30;
 
-  // 80% holatda "ping bor", 20% holatda ulanmagan deb chiqarish
   const isAlive = Math.random() < 0.8;
 
   if (isAlive) {
